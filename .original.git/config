@@ -1,0 +1,17 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://github.com/MetLab-HKUST/WW3-CESM.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[remote "upstream"]
+	url = https://github.com/ESCOMP/WW3-CESM
+	fetch = +refs/heads/*:refs/remotes/upstream/*
+[branch "FLUX-WW3"]
+	remote = origin
+	merge = refs/heads/FLUX-WW3

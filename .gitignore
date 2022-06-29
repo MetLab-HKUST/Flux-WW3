@@ -20,3 +20,6 @@ buildnmlc
 # misc
 *.pyc
 *.gz
+
+# original git info
+.original*/

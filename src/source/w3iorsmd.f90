@@ -234,7 +234,8 @@
 
       ! QL, 150823, save in restart file
       ! QL, 160530, save LAMULT instead of LASLPJ and ALPHAL
-      USE W3ADATMD, ONLY : LAMULT, USSX, USSY
+      ! XS, 220712, save ZR0M
+      USE W3ADATMD, ONLY : LAMULT, USSX, USSY, ZR0M
 !
       IMPLICIT NONE
 !
@@ -626,6 +627,12 @@
                           (USSY(ISEA),ISEA=1+(IPART-1)*NSIZE,         &
                                           MIN(NSEA,IPART*NSIZE))
                     END DO
+                  DO IPART=1,NPART
+                    NREC  = NREC + 1
+                    WRITE (NDSR,REC=NREC)                             &
+                          (ZR0M(ISEA),ISEA=1+(IPART-1)*NSIZE,       &
+                                          MIN(NSEA,IPART*NSIZE))
+                    END DO
                 END IF
             END IF
         ELSE
@@ -693,6 +700,12 @@
                 NREC  = NREC + 1
                 READ (NDSR,REC=NREC,ERR=802,IOSTAT=IERR)              &
                       (USSY(ISEA),ISEA=1+(IPART-1)*NSIZE,             &
+                                      MIN(NSEA,IPART*NSIZE))
+                END DO
+              DO IPART=1,NPART
+                NREC  = NREC + 1
+                READ (NDSR,REC=NREC,ERR=802,IOSTAT=IERR)              &
+                      (ZR0M(ISEA),ISEA=1+(IPART-1)*NSIZE,           &
                                       MIN(NSEA,IPART*NSIZE))
                 END DO
             ELSE

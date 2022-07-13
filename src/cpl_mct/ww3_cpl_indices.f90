@@ -19,6 +19,7 @@ module ww3_cpl_indices
   integer :: index_w2x_Sw_ustokes
   integer :: index_w2x_Sw_vstokes
   integer :: index_w2x_Sw_hstokes
+  integer :: index_w2x_Sw_zr0m    ! XS 220713: add w2x for roughness length
 
 contains
 
@@ -46,6 +47,7 @@ contains
     index_w2x_Sw_ustokes = mct_avect_indexra(w2x,'Sw_ustokes')
     index_w2x_Sw_vstokes = mct_avect_indexra(w2x,'Sw_vstokes')
     index_w2x_Sw_hstokes = mct_avect_indexra(w2x,'Sw_hstokes')
+    index_w2x_Sw_zr0m    = mct_avect_indexra(w2x,'Sw_zr0m')    ! XS 220713
 
     call mct_aVect_clean(x2w)
     call mct_aVect_clean(w2x)

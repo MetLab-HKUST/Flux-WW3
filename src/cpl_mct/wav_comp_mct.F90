@@ -178,6 +178,7 @@
       use ww3_cpl_indices  , only : index_x2w_So_t, index_x2w_So_u, index_x2w_So_v, index_x2w_So_bldepth
       use ww3_cpl_indices  , only : index_w2x_Sw_lamult, index_w2x_Sw_ustokes
       use ww3_cpl_indices  , only : index_w2x_Sw_vstokes, index_w2x_Sw_hstokes
+      use ww3_cpl_indices  , only : index_w2x_Sw_zr0m    ! XS 220713
 
       use shr_sys_mod      , only : shr_sys_flush, shr_sys_abort
       use shr_kind_mod     , only : in=>shr_kind_in, r8=>shr_kind_r8, &
@@ -563,6 +564,7 @@ CONTAINS
       flgrd(37) = .false.  !  37. Langmuir number (La_SL)
       flgrd(38) = .false.  !  38. Langmuir number (La_SL,Proj)
       flgrd(39) = .false.  !  39. Enhancement factor with La_SL,Proj
+      flgrd(40) = .false.  !  40. Rough-flow roughness length  ! XS 220713
 
       if ( iaproc .eq. napout ) then
          flt = .true.
@@ -669,11 +671,13 @@ CONTAINS
       ! send initial state to driver
       ! initial values for lamult, ustokes, vstokes and hstokes
       ! TODO: use hstokes to pass surface layer averaged Langmuir number to POP
+      ! XS 220713: add initialization for zr0m
       do jsea=1, nseal
           w2x_w%rattr(index_w2x_Sw_lamult,jsea) = 1.
           w2x_w%rattr(index_w2x_Sw_ustokes,jsea) = 0.
           w2x_w%rattr(index_w2x_Sw_vstokes,jsea) = 0.
           w2x_w%rattr(index_w2x_Sw_hstokes,jsea) = 0.
+          w2x_w%rattr(index_w2x_Sw_zr0m,jsea)    = 0.
       enddo
 
       ! end redirection of share output to wav log
@@ -897,11 +901,13 @@ CONTAINS
              w2x_w%rattr(index_w2x_Sw_ustokes,jsea) = USSX(ISEA)
              w2x_w%rattr(index_w2x_Sw_vstokes,jsea) = USSY(ISEA)
              w2x_w%rattr(index_w2x_Sw_hstokes,jsea) = LASLPJ(ISEA)
+             w2x_w%rattr(index_w2x_Sw_zr0m,jsea)    = ZR0M(ISEA)  ! XS 220713
           else
              w2x_w%rattr(index_w2x_Sw_lamult,jsea) = 1.
              w2x_w%rattr(index_w2x_Sw_ustokes,jsea) = 0.
              w2x_w%rattr(index_w2x_Sw_vstokes,jsea) = 0.
              w2x_w%rattr(index_w2x_Sw_hstokes,jsea) = 0.
+             w2x_w%rattr(index_w2x_Sw_zr0m,jsea)    = 0.   ! XS 220713
           endif
       enddo
 

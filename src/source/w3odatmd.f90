@@ -269,7 +269,8 @@
       INTEGER                 :: NOUTP = -1, IOUTP = -1, IOSTYP = 1
       ! QL, 150525, 31->38, number of output
       ! QL, 160530, 38->39, add LAMULT
-      INTEGER, PARAMETER      :: NOGRD = 39     
+      ! XS, 220712, 39->40, add ZR0M
+      INTEGER, PARAMETER      :: NOGRD = 40     
       INTEGER, PARAMETER      :: NOSWLL=  2
       INTEGER, PARAMETER      :: NOEXTR=  2
       CHARACTER(LEN=20)       :: IDOUT(NOGRD)
@@ -279,6 +280,7 @@
       LOGICAL                 :: UNIPTS = .FALSE., UPPROC = .FALSE.
 !
 ! QL, 150525, add 7 output variables
+! XS, 220712, add 1 more output for the rough-flow roughness length for momemtum (ZR0M)
       DATA IDOUT  / 'Water depth         ' , 'Current vel.        ' , &
                     'Wind speed          ' , 'Air-sea temp. dif.  ' , &
                     'Friction velocity   ' , 'Wave height         ' , &
@@ -298,7 +300,7 @@
                     'Langmuir number     ' , 'Langmuir No. Proj   ' , &
                     'LC-wind angle       ' , 'Dp.Int. Stokes drift' , &
                     'Langmuir No. SL     ' , 'Langmuir No. SL,Proj' , &
-                    'Enhancement factor  '/
+                    'Enhancement factor  ' , 'Rough flow roughness' /
 !/
 !/ Data structures
 !/

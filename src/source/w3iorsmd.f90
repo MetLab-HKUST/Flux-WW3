@@ -234,8 +234,8 @@
 
       ! QL, 150823, save in restart file
       ! QL, 160530, save LAMULT instead of LASLPJ and ALPHAL
-      ! XS, 220712, save ZR0M
-      USE W3ADATMD, ONLY : LAMULT, USSX, USSY, ZR0M
+      ! XS, 220715, save PEAKCP and HS
+      USE W3ADATMD, ONLY : LAMULT, USSX, USSY, PEAKCP, HS
 !
       IMPLICIT NONE
 !
@@ -630,7 +630,13 @@
                   DO IPART=1,NPART
                     NREC  = NREC + 1
                     WRITE (NDSR,REC=NREC)                             &
-                          (ZR0M(ISEA),ISEA=1+(IPART-1)*NSIZE,       &
+                          (PEAKCP(ISEA),ISEA=1+(IPART-1)*NSIZE,       &   ! XS 220715
+                                          MIN(NSEA,IPART*NSIZE))
+                    END DO
+                  DO IPART=1,NPART
+                    NREC  = NREC + 1
+                    WRITE (NDSR,REC=NREC)                             &
+                          (HS(ISEA),ISEA=1+(IPART-1)*NSIZE,           &   ! XS 220715
                                           MIN(NSEA,IPART*NSIZE))
                     END DO
                 END IF
@@ -705,7 +711,13 @@
               DO IPART=1,NPART
                 NREC  = NREC + 1
                 READ (NDSR,REC=NREC,ERR=802,IOSTAT=IERR)              &
-                      (ZR0M(ISEA),ISEA=1+(IPART-1)*NSIZE,           &
+                      (PEAKCP(ISEA),ISEA=1+(IPART-1)*NSIZE,           &   ! XS 220715
+                                      MIN(NSEA,IPART*NSIZE))
+                END DO
+              DO IPART=1,NPART
+                NREC  = NREC + 1
+                READ (NDSR,REC=NREC,ERR=802,IOSTAT=IERR)              &
+                      (HS(ISEA),ISEA=1+(IPART-1)*NSIZE,               &   ! XS 220715
                                       MIN(NSEA,IPART*NSIZE))
                 END DO
             ELSE

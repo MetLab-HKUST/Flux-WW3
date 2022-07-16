@@ -19,7 +19,8 @@ module ww3_cpl_indices
   integer :: index_w2x_Sw_ustokes
   integer :: index_w2x_Sw_vstokes
   integer :: index_w2x_Sw_hstokes
-  integer :: index_w2x_Sw_zr0m    ! XS 220713: add w2x for roughness length
+  integer :: index_w2x_Sw_peakcp    ! XS 220716: add w2x for peak wave phase speed
+  integer :: index_w2x_Sw_hs        ! XS 220716: add w2x for significant wave height
 
 contains
 
@@ -47,7 +48,8 @@ contains
     index_w2x_Sw_ustokes = mct_avect_indexra(w2x,'Sw_ustokes')
     index_w2x_Sw_vstokes = mct_avect_indexra(w2x,'Sw_vstokes')
     index_w2x_Sw_hstokes = mct_avect_indexra(w2x,'Sw_hstokes')
-    index_w2x_Sw_zr0m    = mct_avect_indexra(w2x,'Sw_zr0m')    ! XS 220713
+    index_w2x_Sw_peakcp  = mct_avect_indexra(w2x,'Sw_peakcp')    ! XS 220716
+    index_w2x_Sw_hs      = mct_avect_indexra(w2x,'Sw_hs')        ! XS 220716
 
     call mct_aVect_clean(x2w)
     call mct_aVect_clean(w2x)

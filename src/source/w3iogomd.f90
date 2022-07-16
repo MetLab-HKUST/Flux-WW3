@@ -211,13 +211,13 @@
       !                     (surface)
       !             UD: wind direction
       ! QL, 160530, LAMULT: enhancement factor
-      ! XS, 220713, ZR0M: rough-flow roughness length
+      ! XS, 220715, PEAKCP: peak wave phase speed
       USE W3ADATMD, ONLY: CG, WN, DW, HS, WLM, TMN, THM, THS, FP0,    &
                           THP0, FP1, THP1, ABA, ABD, UBA, UBD,        &
                           SXX, SYY, SXY, PHS, PTP, PLP, PTH, PSI, PWS,&
                           PWST, PNR, USERO, USSX, USSY, LANGMT,       &
                           LAPROJ, ALPHAL, UD, USSXH, USSYH, LASL,     &
-                          LASLPJ, ALPHALS, LAMULT, ZR0M
+                          LASLPJ, ALPHALS, LAMULT, PEAKCP
       USE W3ODATMD, ONLY: NDST, UNDEF, IAPROC, NAPROC, ICPRT, DTPRT,  &
                           WSCUT, NOSWLL
       ! QL, 150525, HML: mixing layer depth (from coupler)
@@ -240,12 +240,12 @@
       ! QL, 150525, FACTOR2
       !             SWW: angle between wind and waves
       !             HSL: surface layer depth (=0.2*HML)
-      ! XS, 220713, PEAKSPEED: peak wave speed
-      !             WAVEAGE: wave age
+      !
+      !             
       REAL                    :: FXPMC, FACTOR, EBAND, FKD,           &
                                  FP1STR, FP1TST, FPISTR, AABS, UABS,  &
                                  XL, XH, XL2, XH2, EL, EH, DENOM,     &
-                                 FACTOR2, SWW, HSL, PEAKSPEED, WAVEAGE
+                                 FACTOR2, SWW, HSL
       ! QL, 150525, ETUSSX, ETUSSY, ETUSCX, ETUSCY, ETUSSXH, ETUSSYH
       !             tmp variables for surface and SL averaged SD
       REAL                    :: ET(NSEAL), EWN(NSEAL), ETR(NSEAL),   &
@@ -312,8 +312,8 @@
       USSYH  = 0.
       ! QL, 160530
       LAMULT  = 1.
-      ! XS, 220713
-      ZR0M = 0.
+      ! XS, 220715
+      PEAKCP = UNDEF 
 !
 ! 2.  Integral over discrete part of spectrum ------------------------ *
 !
@@ -592,16 +592,16 @@
         DENOM  = XL*EH - XH*EL
         FP1(ISEA) = FP1(ISEA) * ( 1. + 0.5 * (XL2*EH - XH2*EL )  &
              / SIGN ( MAX(ABS(DENOM),1.E-15) , DENOM ) )
-        ! XS 220713: add code here to calculate rough-flow roughness length
-        PEAKSPEED = 9.8 / FP0(ISEA)    ! assuming the deep-water limit
-        WAVEAGE = PEAKSPEED / UST(ISEA)
-        if (WAVEAGE .lt. 12.0) then
-           ZR0M(ISEA) = 4.54 * WAVEAGE**(-3.9) * HS(ISEA)
-        else if (WAVEAGE .lt. 30.0) then
-           ZR0M(ISEA) = 5.61e-3 * WAVEAGE**(-1.2) * HS(ISEA)
-        else
-           ZR0M(ISEA) = 1.57e-5 * WAVEAGE**0.5 * HS(ISEA)
-        end if
+        ! XS 220715: add code here to calculate peak wave phase speed, used later for roughness
+        PEAKCP(ISEA) = 9.8 / FP0(ISEA)    ! assuming the deep-water limit
+        ! WAVEAGE = PEAKCP(ISEA) / UST(ISEA)
+        ! if (WAVEAGE .lt. 12.0) then
+        !    ZR0M(ISEA) = 4.54 * WAVEAGE**(-3.9) * HS(ISEA)
+        ! else if (WAVEAGE .lt. 30.0) then
+        !    ZR0M(ISEA) = 5.61e-3 * WAVEAGE**(-1.2) * HS(ISEA)
+        ! else
+        !    ZR0M(ISEA) = 1.57e-5 * WAVEAGE**0.5 * HS(ISEA)
+        ! end if
         END DO
 !
 ! 4.d Peak directions
@@ -799,8 +799,8 @@
 !         38  Langmuir number (La_SL,Proj).
 ! QL, 160530
 !         39  Enhancement factor with La_SL,Proj.
-! XS, 220713
-!         40  Rough-flow roughness length
+! XS, 220715
+!         40  Peak wave phase speed
 
 !
 !     15-20 consist of a set of fields, index 0 = wind sea, index
@@ -878,14 +878,14 @@
       ! QL, 150525, USSX, USSY, USSXH, USSYH, LANGMT, LAPROJ, LASL
       !             LASLPJ, ALPHAL, ALPHALS
       ! QL, 160530, LAMULT
-      ! XS, 220713, ZR0M
+      ! XS, 220715, PEAKCP
       USE W3ADATMD, ONLY: AINIT, DW, UA, UD, AS, CX, CY, HS, WLM,     &
                           TMN, THM, THS, FP0, THP0, FP1, THP1, DTDYN, &
                           FCUT, ABA, ABD, UBA, UBD, SXX, SYY, SXY,    &
                           PHS, PTP, PLP, PTH, PSI, PWS, PWST, PNR,    &
                           USERO, USSX, USSY, LANGMT, LAPROJ, ALPHAL,  &
-                          USSXH, USSYH, LASL, LASLPJ, ALPHALS, LAMULT, &
-                          ZR0M 
+                          USSXH, USSYH, LASL, LASLPJ, ALPHALS, LAMULT,&
+                          PEAKCP
       USE W3ODATMD, ONLY: NOGRD, IDOUT, UNDEF, NDST, NDSE, FLOGRD,    &
                           IPASS => IPASS1, WRITE => WRITE1, FNMPRE,   &
                           NOSWLL, NOEXTR
@@ -1431,11 +1431,11 @@
                     UNITSTR1 = '1'
                     LNSTR1 = 'Enhancement factor'
                   ELSE IF ( IO .EQ. 40 ) THEN
-                    AUX1(1:NSEA) = ZR0M(1:NSEA)
+                    AUX1(1:NSEA) = PEAKCP(1:NSEA)
                     WAUX1 = .TRUE.
-                    FLDSTR1 = 'ZR0M'
-                    UNITSTR1 = 'm'
-                    LNSTR1 = 'Rough-flow roughness length'
+                    FLDSTR1 = 'PEAKCP'
+                    UNITSTR1 = 'm/s'
+                    LNSTR1 = 'Peak wave phase speed'
                   ELSE
                     WRITE (NDSE,999)
                     CALL EXTCDE ( 30 )
@@ -1643,10 +1643,10 @@
                   ELSE IF ( IO .EQ. 39 ) THEN
                     READ (NDSOG,END=801,ERR=802,IOSTAT=IERR)         &
                                                         LAMULT(1:NSEA)
-                  ! XS, 220713, ZR0M  
+                  ! XS, 220715, PEAKCP  
                   ELSE IF ( IO .EQ. 40 ) THEN
                     READ (NDSOG,END=801,ERR=802,IOSTAT=IERR)         &
-                                                        ZR0M(1:NSEA)
+                                                        PEAKCP(1:NSEA)
                   ELSE
                     WRITE (NDSE,999)
                     CALL EXTCDE ( 30 )

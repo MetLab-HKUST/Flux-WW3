@@ -260,7 +260,7 @@
         ! QL, 150525, USSX, USSY, LANGMT, LAPROJ, LASL, LASLPJ, 
         !             ALPHAL, ALPHALS
         ! QL, 160530, LAMULT
-        ! XS, 220712, ZR0M    
+        ! XS, 220716, PEAKCP  
         REAL, POINTER         :: DW(:), UA(:), UD(:), U10(:), U10D(:),&
                                  AS(:), CX(:), CY(:), EMN(:), FMN(:), &
                                  WNM(:), AMX(:), CDS(:), Z0S(:),      &
@@ -272,7 +272,7 @@
                                  USSX(:), USSY(:), LANGMT(:),         &
                                  LAPROJ(:), ALPHAL(:), USSXH(:),      &
                                  USSYH(:), LASL(:), LASLPJ(:),        &
-                                 ALPHALS(:), LAMULT(:), ZR0M(:)
+                                 ALPHALS(:), LAMULT(:), PEAKCP(:)
         REAL, POINTER         :: PHS(:,:), PTP(:,:), PLP(:,:),        &
                                  PTH(:,:), PSI(:,:), PWS(:,:),        &
                                  PWST(:), PNR(:)
@@ -332,7 +332,7 @@
       ! QL, 150525, USSX, USSY, LANGMT, LAPROJ, LASL, LASLPJ, 
       !             ALPHAL, ALPHALS
       ! QL, 160530, LAMULT
-      ! XS, 220712, ZR0M
+      ! XS, 220716, PEAKCP
       REAL, POINTER           :: DW(:), UA(:), UD(:), U10(:), U10D(:),&
                                  AS(:), CX(:), CY(:), EMN(:), FMN(:), &
                                  WNM(:), AMX(:), CDS(:), Z0S(:),      &
@@ -344,7 +344,7 @@
                                  USSX(:), USSY(:), LANGMT(:),         &
                                  LAPROJ(:), ALPHAL(:), USSXH(:),      &
                                  USSYH(:), LASL(:), LASLPJ(:),        &
-                                 ALPHALS(:), LAMULT(:), ZR0M(:) 
+                                 ALPHALS(:), LAMULT(:), PEAKCP(:) 
       REAL, POINTER           :: PHS(:,:), PTP(:,:), PLP(:,:),        &
                                  PTH(:,:), PSI(:,:), PWS(:,:),        &
                                  PWST(:), PNR(:)
@@ -629,7 +629,7 @@
       ! QL, 150525, USSX, USSY, LANGMT, LAPROJ, LASL, LASLPJ, 
       !             ALPHAL, ALPHALS
       ! QL, 160530, LAMULT
-      ! XS, 220712, ZR0M
+      ! XS, 220716, PEAKCP
       ALLOCATE ( WADATS(IMOD)%DW(0:NSEA) , WADATS(IMOD)%UA(0:NSEA)  , &
                  WADATS(IMOD)%UD(0:NSEA) , WADATS(IMOD)%U10(NSEA)   , &
                  WADATS(IMOD)%U10D(NSEA) , WADATS(IMOD)%AS(0:NSEA)  , &
@@ -656,7 +656,7 @@
                  WADATS(IMOD)%ALPHAL(NXXX)                          , &
                  WADATS(IMOD)%ALPHALS(NXXX)                         , &
                  WADATS(IMOD)%LAMULT(NXXX)                          , &
-                 WADATS(IMOD)%ZR0M(NXXX) )
+                 WADATS(IMOD)%PEAKCP(NXXX) )
 !
       WADATS(IMOD)%USERO = UNDEF
 !
@@ -1111,7 +1111,7 @@
           ! QL, 150525, USSX, USSY, LANGMT, LAPROJ, LASL, LASLPJ, 
           !             ALPHAL, ALPHALS
           ! QL, 160530, LAMULT
-          ! XS, 220712, ZR0M
+          ! XS, 220716, PEAKCP
           USSX   => WADATS(IMOD)%USSX
           USSY   => WADATS(IMOD)%USSY
           LANGMT => WADATS(IMOD)%LANGMT
@@ -1123,7 +1123,7 @@
           USSXH  => WADATS(IMOD)%USSXH
           USSYH  => WADATS(IMOD)%USSYH
           LAMULT => WADATS(IMOD)%LAMULT
-          ZR0M   => WADATS(IMOD)%ZR0M 
+          PEAKCP => WADATS(IMOD)%PEAKCP 
 !
           IF ( FL_ALL ) THEN
 !

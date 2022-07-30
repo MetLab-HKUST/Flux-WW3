@@ -535,7 +535,7 @@ CONTAINS
       flgrd( 8) = .true.  !   8. mean wave period (Tn1, s)
       flgrd( 9) = .true.  !   9. mean wave dir (deg: met conv)
       flgrd(10) = .false. !  10. mean dir spread (deg: )
-      flgrd(11) = .false. !  11. peak freq (Hz)
+      flgrd(11) = .true. !  11. peak freq (Hz)
       flgrd(12) = .false. !  12. peak dir (deg: )
       flgrd(13) = .false. !  13. peak freq of wind-sea part
       flgrd(14) = .false. !  14. wind-sea dir (deg: met conv)
@@ -564,7 +564,7 @@ CONTAINS
       flgrd(37) = .false.  !  37. Langmuir number (La_SL)
       flgrd(38) = .false.  !  38. Langmuir number (La_SL,Proj)
       flgrd(39) = .false.  !  39. Enhancement factor with La_SL,Proj
-      flgrd(40) = .false.  !  40. Peak wave phase speed   ! XS 220713
+      flgrd(40) = .true.   !  40. Peak wave phase speed   ! XS 220713
 
       if ( iaproc .eq. napout ) then
          flt = .true.

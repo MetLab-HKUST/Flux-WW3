@@ -593,7 +593,7 @@
         FP1(ISEA) = FP1(ISEA) * ( 1. + 0.5 * (XL2*EH - XH2*EL )  &
              / SIGN ( MAX(ABS(DENOM),1.E-15) , DENOM ) )
         ! XS 220715: add code here to calculate peak wave phase speed, used later for roughness
-        PEAKCP(ISEA) = 9.8 / FP0(ISEA)    ! assuming the deep-water limit
+        PEAKCP(ISEA) = 9.8 / (2.0*3.1415926*FP0(ISEA))    ! assuming the deep-water limit
         ! WAVEAGE = PEAKCP(ISEA) / UST(ISEA)
         ! if (WAVEAGE .lt. 12.0) then
         !    ZR0M(ISEA) = 4.54 * WAVEAGE**(-3.9) * HS(ISEA)

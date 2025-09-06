@@ -1,6 +1,6 @@
 # Modified WaveWatch III (WW3) in CESM
 
-Modified CESM2/WW3 with sea-state dependent surface fluxes
+Modified CESM2/WW3 with sea-state dependent surface fluxes, based on CESM2 v2.2.0
 
 Cite as:
 
